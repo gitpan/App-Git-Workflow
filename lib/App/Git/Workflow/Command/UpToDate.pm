@@ -13,7 +13,7 @@ use App::Git::Workflow;
 use App::Git::Workflow::Command qw/get_options/;
 use Carp qw/cluck/;
 
-our $VERSION  = 0.7;
+our $VERSION  = 0.8;
 our $workflow = App::Git::Workflow->new;
 our ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 our %option;
@@ -268,6 +268,7 @@ sub format_html {
 HTML
 
     for my $row (@$csv) {
+        next if !$row && !$row->[2];
         my ($name, $email) = $row->[2] =~ /^<([^>]+)>(.*)$/;
         $row->[0] = $row->[0] eq $releases[-1]{name} ? $row->[0] : qq{<span class="old">$row->[0]</span>};
         $row->[2] = $row->[0] eq $releases[-1]{name} ? $name : qq{<a href="mailto:$email?subject=$row->[1]%20is%20out%20of%20date">$name</a>};
@@ -302,7 +303,7 @@ git-up-to-date - Check that git branches include latest production branch/tag
 
 =head1 VERSION
 
-This documentation refers to git-up-to-date version 0.7
+This documentation refers to git-up-to-date version 0.8
 
 =head1 SYNOPSIS
 

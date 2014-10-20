@@ -15,7 +15,7 @@ use Git;
 use File::Spec;
 use base qw/Exporter/;
 
-our $VERSION     = 0.7;
+our $VERSION     = 0.8;
 our @EXPORT      = qw/git/;
 our @EXPORT_OK   = qw//;
 our %EXPORT_TAGS = ();
@@ -28,10 +28,11 @@ sub new {
         my @dir = File::Spec->splitdir( File::Spec->rel2abs( File::Spec->curdir ) );
         while (
             @dir > 1
-            && ! -d ( $self->{repository} = File::Spec->catdir(@dir, '.git') )
+            && ! -d File::Spec->catdir(@dir, '.git')
         ) {
             pop @dir;
         }
+        $self->{repository} = File::Spec->catdir(@dir);
         die "Couldn't find the git repository!\n" if !-d $self->{repository};
     }
     $self->{git} = Git->repository(Directory => $self->{repository});
@@ -68,6 +69,12 @@ sub AUTOLOAD {
 
     return if !$self || !$self->{git};
 
+    warn "running : " . (
+        $self->{git}->can($called)
+        ? "git->$called(@_)"
+        : "git->command($called, @_)"
+    ) . "\n" if $ENV{GW_VERBOSE};
+
     return $self->{git}->can($called)
         ? $self->{git}->$called(@_)
         : $self->{git}->command($called, @_);
@@ -83,7 +90,7 @@ App::Git::Workflow::Repository - A basic wrapper around GIT
 
 =head1 VERSION
 
-This documentation refers to App::Git::Workflow::Repository version 0.7
+This documentation refers to App::Git::Workflow::Repository version 0.8
 
 =head1 SYNOPSIS
 

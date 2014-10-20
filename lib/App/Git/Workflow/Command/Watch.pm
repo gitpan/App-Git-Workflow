@@ -12,7 +12,7 @@ use English qw/ -no_match_vars /;
 use App::Git::Workflow;
 use App::Git::Workflow::Command qw/get_options/;
 
-our $VERSION  = 0.7;
+our $VERSION  = 0.8;
 our $workflow = App::Git::Workflow->new;
 our ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 our %option;
@@ -25,14 +25,14 @@ sub run {
     %option = (
         max      => 10,
         sleep    => 60,
-        pull_cmd => 'pull',
+        pull_options => '',
     );
     get_options(
         \%option,
         'all|a',
         'branch|b=s',
         'pull|p',
-        'pull_cmd|pull-cmd|P=s',
+        'pull_options|pull-options|P=s',
         'file|f=s',
         'max|m=i',
         'once|1',
@@ -98,8 +98,7 @@ sub git_state {
         @out = $workflow->git->rev_list('--all', "-$option{max}");
     }
     else {
-        my $pull = $option{pull_cmd};
-        $workflow->git->$pull if $option{pull};
+        $workflow->git->pull(split /\s+/, $option{pull_options}) if $option{pull};
         @out = $workflow->git->log('--oneline', "-$option{max}");
     }
 
@@ -148,7 +147,7 @@ git-watch - Watch for changes in repository up-stream
 
 =head1 VERSION
 
-This documentation refers to git-watch version 0.7
+This documentation refers to git-watch version 0.8
 
 =head1 SYNOPSIS
 

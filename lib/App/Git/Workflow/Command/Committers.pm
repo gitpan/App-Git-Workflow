@@ -13,7 +13,7 @@ use Time::Piece;
 use App::Git::Workflow;
 use App::Git::Workflow::Command qw/get_options/;
 
-our $VERSION  = 0.7;
+our $VERSION  = 0.8;
 our $workflow = App::Git::Workflow->new;
 our ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 our %option;
@@ -42,7 +42,7 @@ sub run {
             : $option{period} eq 'week'  ? 7
             : $option{period} eq 'month' ? 30
             : $option{period} eq 'year'  ? 365
-            :                              1;
+            :                              die "Unknown period '$option{period}' please choose one of day, week, month or year\n";
         $date
             = $now->wday == 1 ? localtime(time - 3 * $period * 24 * 60 * 60)->ymd
             : $now->wday == 7 ? localtime(time - 2 * $period * 24 * 60 * 60)->ymd
@@ -81,7 +81,7 @@ git-committers - Stats on the number of commits by committer
 
 =head1 VERSION
 
-This documentation refers to git-committers version 0.7
+This documentation refers to git-committers version 0.8
 
 =head1 SYNOPSIS
 

@@ -19,49 +19,49 @@ name: App-Git-Workflow
 provides:
   App::Git::Workflow:
     file: lib/App/Git/Workflow.pm
-    version: 0.7
+    version: 0.8
   App::Git::Workflow::Command:
     file: lib/App/Git/Workflow/Command.pm
-    version: 0.7
+    version: 0.8
   App::Git::Workflow::Command::BranchClean:
     file: lib/App/Git/Workflow/Command/BranchClean.pm
-    version: 0.7
+    version: 0.8
   App::Git::Workflow::Command::BranchGrep:
     file: lib/App/Git/Workflow/Command/BranchGrep.pm
-    version: 0.7
+    version: 0.8
   App::Git::Workflow::Command::Committers:
     file: lib/App/Git/Workflow/Command/Committers.pm
-    version: 0.7
+    version: 0.8
   App::Git::Workflow::Command::Cows:
     file: lib/App/Git/Workflow/Command/Cows.pm
-    version: 0.7
+    version: 0.8
   App::Git::Workflow::Command::Feature:
     file: lib/App/Git/Workflow/Command/Feature.pm
-    version: 0.7
+    version: 0.8
   App::Git::Workflow::Command::Files:
     file: lib/App/Git/Workflow/Command/Files.pm
-    version: 0.7
+    version: 0.8
   App::Git::Workflow::Command::Jira:
     file: lib/App/Git/Workflow/Command/Jira.pm
-    version: 0.7
+    version: 0.8
   App::Git::Workflow::Command::Pom:
     file: lib/App/Git/Workflow/Command/Pom.pm
-    version: 0.7
+    version: 0.8
   App::Git::Workflow::Command::TagGrep:
     file: lib/App/Git/Workflow/Command/TagGrep.pm
-    version: 0.7
+    version: 0.8
   App::Git::Workflow::Command::UpToDate:
     file: lib/App/Git/Workflow/Command/UpToDate.pm
-    version: 0.7
+    version: 0.8
   App::Git::Workflow::Command::Watch:
     file: lib/App/Git/Workflow/Command/Watch.pm
-    version: 0.7
+    version: 0.8
   App::Git::Workflow::Pom:
     file: lib/App/Git/Workflow/Pom.pm
-    version: 0.7
+    version: 0.8
   App::Git::Workflow::Repository:
     file: lib/App/Git/Workflow/Repository.pm
-    version: 0.7
+    version: 0.8
 recommends:
   JIRA::REST: 0
   JSON: 2.0
@@ -77,4 +77,4 @@ resources:
   bugtracker: http://rt.cpan.org/NoAuth/Bugs.html?Dist=git-workflow-tools
   license: http://dev.perl.org/licenses/
   repository: git://github.com/ivanwills/git-workflow-tools.git
-version: 0.7
+version: 0.8
