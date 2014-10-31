@@ -15,7 +15,7 @@ use English qw/ -no_match_vars /;
 use App::Git::Workflow::Repository qw//;
 use base qw/Exporter/;
 
-our $VERSION   = 0.9;
+our $VERSION   = 0.11;
 
 sub _alphanum_sort {
     no warnings qw/once/;
@@ -33,7 +33,7 @@ sub new {
     my $self  = \%param;
 
     bless $self, $class;
-    $self->{git}    ||= App::Git::Workflow::Repository->git;
+
     $self->{TEST}     = 0;
     $self->{VERBOSE}  = 0;
     $self->{GIT_DIR}  = '.git';
@@ -46,7 +46,7 @@ sub new {
     return $self;
 }
 
-sub git { $_[0]->{git} }
+sub git { $_[0]->{git} ||= App::Git::Workflow::Repository->git; }
 
 sub branches {
     my ($self, $type, $contains) = @_;
@@ -284,7 +284,7 @@ App::Git::Workflow - Git workflow tools
 
 =head1 VERSION
 
-This documentation refers to App::Git::Workflow version 0.9
+This documentation refers to App::Git::Workflow version 0.11
 
 =head1 SYNOPSIS
 
