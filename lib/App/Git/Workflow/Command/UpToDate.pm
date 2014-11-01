@@ -13,7 +13,7 @@ use App::Git::Workflow;
 use App::Git::Workflow::Command qw/get_options/;
 use Carp qw/cluck/;
 
-our $VERSION  = 0.11;
+our $VERSION  = 0.12;
 our $workflow = App::Git::Workflow->new;
 our ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 our %option;
@@ -160,20 +160,16 @@ sub branches_contain {
         next BRANCH if $option{include} && $branch !~ /$option{include}/;
         next BRANCH if $option{exclude} && $branch =~ /$option{exclude}/;
 
-        open my $pipe, '-|', "git log $format -n 1 '$branch'";
         my ($first, $author, $found, $release);
 
-        LOG:
-        while (my $log = <$pipe>) {
-            chomp $log;
-            my ($sha, $time, $user) = split /\s+/, $log, 3;
+        my ($log) = $workflow->git->log($format, qw/-n 1/, $branch);
+        my ($sha, $time, $user) = split /\s+/, $log, 3;
 
-            $first  = $time;
-            $author = $user;
-            if ( $time < $releases[-1]{time} ) {
-                warn "skipping $branch\n" if $option{verbose} > 1;
-                next BRANCH;
-            }
+        $first  = $time;
+        $author = $user;
+        if ( $time < $releases[-1]{time} ) {
+            warn "skipping $branch\n" if $option{verbose} && $option{verbose} > 1;
+            next BRANCH;
         }
 
         my $age = time - $releases[0]{time} + 10 * 60 * 60 * 24;
@@ -303,7 +299,7 @@ git-up-to-date - Check that git branches include latest production branch/tag
 
 =head1 VERSION
 
-This documentation refers to git-up-to-date version 0.11
+This documentation refers to git-up-to-date version 0.12
 
 =head1 SYNOPSIS
 
