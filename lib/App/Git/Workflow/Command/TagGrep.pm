@@ -12,7 +12,7 @@ use English qw/ -no_match_vars /;
 use App::Git::Workflow;
 use App::Git::Workflow::Command qw/get_options/;
 
-our $VERSION  = 0.12;
+our $VERSION  = 0.13;
 our $workflow = App::Git::Workflow->new;
 our ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 our %option;
@@ -24,7 +24,7 @@ sub run {
     );
 
     $ARGV[0] ||= '';
-    my $grep = $option{insensitive} ? "(?^i:$ARGV[0])" : $ARGV[0];
+    my $grep = $option{insensitive} ? "(?i:$ARGV[0])" : $ARGV[0];
 
     print join "\n", sort {_sorter()} grep {/$grep/} $workflow->git->tag;
     print "\n";
@@ -49,7 +49,7 @@ git-tag-grep - grep tags
 
 =head1 VERSION
 
-This documentation refers to git-tag-grep version 0.12
+This documentation refers to git-tag-grep version 0.13
 
 =head1 SYNOPSIS
 
