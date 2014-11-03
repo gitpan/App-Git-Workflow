@@ -13,7 +13,7 @@ use App::Git::Workflow;
 use App::Git::Workflow::Command qw/get_options/;
 use Carp qw/cluck/;
 
-our $VERSION  = 0.13;
+our $VERSION  = 0.91;
 our $workflow = App::Git::Workflow->new;
 our ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 our %option;
@@ -202,7 +202,7 @@ sub format_text {
         $max[1] = length $row->[1] if $max[1] < length $row->[1];
     }
     for my $row (@$csv) {
-        printf "%$max[0]s %$max[1]s %s (%.0f days old)\n", @$row[0..4];
+        printf "%$max[0]s %$max[1]s %s (%.0f days old)\n", @$row[0..3];
     }
 
     return;
@@ -299,7 +299,7 @@ git-up-to-date - Check that git branches include latest production branch/tag
 
 =head1 VERSION
 
-This documentation refers to git-up-to-date version 0.13
+This documentation refers to git-up-to-date version 0.91
 
 =head1 SYNOPSIS
 

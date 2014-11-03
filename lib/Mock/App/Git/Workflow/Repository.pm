@@ -13,7 +13,7 @@ use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use base qw/Exporter/;
 
-our $VERSION     = 0.13;
+our $VERSION     = 0.91;
 our @EXPORT_OK   = qw//;
 our %EXPORT_TAGS = ();
 #our @EXPORT      = qw//;
@@ -50,6 +50,8 @@ sub AUTOLOAD {
     $called =~ s/.*:://;
     $called =~ s/_/-/g;
 
+    return if $called eq 'DESTROY';
+
     my $cmd = "git $called " . (join ' ', @_);
     if ( !@{ $self->{data} } ) {
         confess "No data setup for `$cmd`\n\t# ".(join "\n\t# ", reverse @{ $self->{ran} })."\n\t";
@@ -77,7 +79,7 @@ Mock::App::Git::Workflow::Repository - Mock of a git repository
 
 =head1 VERSION
 
-This documentation refers to Mock::App::Git::Workflow::Repository version 0.13
+This documentation refers to Mock::App::Git::Workflow::Repository version 0.91
 
 =head1 SYNOPSIS
 
