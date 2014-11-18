@@ -12,7 +12,7 @@ WriteMakefile
                    'Path::Class' => 0,
                    'Test::MockTime' => 0,
                    'Test::More' => 0,
-                   'Test::NoWarnings' => 0,
+                   'Test::Warnings' => 0,
                    'Time::Piece' => 0,
                    'XML::Tiny' => 0,
                    'autodie' => 0
@@ -28,6 +28,7 @@ WriteMakefile
                    'bin/git-hook-setup',
                    'bin/git-jira',
                    'bin/git-pom',
+                   'bin/git-recent',
                    'bin/git-tag-grep',
                    'bin/git-up-to-date',
                    'bin/git-watch'

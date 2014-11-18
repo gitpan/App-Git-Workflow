@@ -17,7 +17,7 @@ use Test::MockTime qw/restore_time set_fixed_time/;
 use App::Git::Workflow;
 use Mock::App::Git::Workflow::Repository;
 
-our $VERSION     = 0.91;
+our $VERSION     = 0.92;
 our @EXPORT      = qw/command_ok/;
 our @EXPORT_OK   = qw/command_ok/;
 our %EXPORT_TAGS = ();
@@ -34,6 +34,10 @@ sub command_ok ($$) {  ## no critic
         if ($data->{skip} && $data->{skip}->()) {
             plan skip_all => "Skipping $data->{name}";
             return;
+        }
+        local $TODO;
+        if ($data->{todo}) {
+            $TODO = $data->{todo};
         }
 
         # initialise
@@ -114,7 +118,6 @@ sub command_ok ($$) {  ## no critic
     };
 }
 
-
 1;
 
 __END__
@@ -125,7 +128,7 @@ Test::Git::Workflow::Command - Test Git::Workflow::Command::* files
 
 =head1 VERSION
 
-This documentation refers to Test::Git::Workflow::Command version 0.91
+This documentation refers to Test::Git::Workflow::Command version 0.92
 
 =head1 SYNOPSIS
 
