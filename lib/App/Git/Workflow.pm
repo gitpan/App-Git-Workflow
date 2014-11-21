@@ -15,7 +15,7 @@ use English qw/ -no_match_vars /;
 use App::Git::Workflow::Repository qw//;
 use base qw/Exporter/;
 
-our $VERSION   = 0.94;
+our $VERSION   = 0.95;
 
 sub _alphanum_sort {
     no warnings qw/once/;
@@ -46,7 +46,7 @@ sub new {
     return $self;
 }
 
-sub git { $_[0]->{git} ||= App::Git::Workflow::Repository->git; }
+sub git { $_[0]->{git} || ($_[0]->{git} = App::Git::Workflow::Repository->git); }
 
 sub branches {
     my ($self, $type, $contains) = @_;
@@ -68,7 +68,7 @@ sub branches {
         map { /^[*]?\s+(?:remotes\/)?(.*?)\s*$/xms }
         grep {!/HEAD/}
         $self->git->branch(@options)
-    ] if !$self->{branches}{$type} || !@{ $self->{branches}{$type} };
+    ] if !$self->{branches}{$type};
 
     return @{ $self->{branches}{$type} };
 }
@@ -213,21 +213,6 @@ sub spew {
     print $fh @out;
 }
 
-sub runner {
-    my ($self, @cmd) = @_;
-
-    print join ' ', @cmd, "\n" if $self->{VERBOSE};
-    return if $self->{TEST};
-
-    if (!defined wantarray) {
-        return system @cmd;
-    }
-
-    carp "Too many arguments!\n" if @cmd != 1;
-
-    return qx/$cmd[0]/;
-}
-
 sub settings {
     my ($self) = @_;
     return $self->{settings} if $self->{settings};
@@ -284,7 +269,7 @@ App::Git::Workflow - Git workflow tools
 
 =head1 VERSION
 
-This documentation refers to App::Git::Workflow version 0.94
+This documentation refers to App::Git::Workflow version 0.95
 
 =head1 SYNOPSIS
 
@@ -351,8 +336,6 @@ Get the current branch/tag or commit
 =head2 C<release ($tag_or_branch, $local, $search)>
 
 =head2 C<releases (%option)>
-
-=head2 C<runner (@cmd)>
 
 =head2 C<commit_details ($name)>
 

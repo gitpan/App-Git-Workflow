@@ -12,7 +12,7 @@ use English qw/ -no_match_vars /;
 use App::Git::Workflow::Pom;
 use App::Git::Workflow::Command qw/get_options/;
 
-our $VERSION  = 0.94;
+our $VERSION  = 0.95;
 our $workflow = App::Git::Workflow::Pom->new;
 our ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 our %option;
@@ -72,7 +72,7 @@ sub run {
     if ($option{new_pom}) {
         my $version = $workflow->next_pom_version($option{pom});
 
-        $workflow->runner(qw/mvn versions:set/, "–DnewVersion=$version");
+        system(qw/mvn versions:set/, "–DnewVersion=$version");
     }
 
     # push if requested to
@@ -106,7 +106,7 @@ git-feature - Create a feature branch from the "current release"
 
 =head1 VERSION
 
-This documentation refers to git-feature version 0.94
+This documentation refers to git-feature version 0.95
 
 =head1 SYNOPSIS
 
