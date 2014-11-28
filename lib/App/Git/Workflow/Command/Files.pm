@@ -12,7 +12,7 @@ use English qw/ -no_match_vars /;
 use App::Git::Workflow;
 use App::Git::Workflow::Command qw/get_options/;
 
-our $VERSION = 0.95;
+our $VERSION = 0.96;
 our $workflow = App::Git::Workflow->new;
 my ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 our %option;
@@ -25,6 +25,10 @@ sub run {
         \%option,
         'since|s=s',
         'age|a=i',
+        'tag|t=s',
+        'branch|b=s',
+        'local|l',
+        'max_history|max-history|m=i',
     ) or return;
 
     # do stuff here
@@ -117,25 +121,34 @@ git-files - Get information on files changed across branches.
 
 =head1 VERSION
 
-This documentation refers to git-files version 0.95
+This documentation refers to git-files version 0.96
 
 =head1 SYNOPSIS
 
-   git-files [changed] [option]
-   git-files set [option]
+   git-files [changed] [(-s|--age) days] [(-s|--since) YYYY-MM-DD] [-v|--verbose]
+   git-files local [(-s|--age) days] [(-s|--since) YYYY-MM-DD] [-v|--verbose]
+   git-files set [-v|--verbose]
    git-files
 
  SUB COMMANDS:
   changed       Files that have changed
-  local         See if any locally (to the branch) changed files have been
+  local         See if any locally (to the branch) modified files have been
                 modified in other branches.
-  set           Sets files to their committed date
+  set           Sets files modified time to the date they were last committed.
 
  OPTIONS:
   -a --age[=]days
                 Age in days to look changed files
   -s --since[=]YYYY-MM-DDTHH::MM
                 Files changed since date
+  -t --tag[=]tag
+                Tag to use to define a release
+  -b --branch[=]branch
+                Branch to use to define a release
+  -l --local
+                Use master as release
+  -m --max-history[=]int
+                Limit getting release history to this number of commits
 
   -v --verbose  Show more detailed option
      --VERSION  Prints the version information

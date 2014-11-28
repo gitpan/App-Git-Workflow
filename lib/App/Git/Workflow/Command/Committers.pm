@@ -13,7 +13,7 @@ use Time::Piece;
 use App::Git::Workflow;
 use App::Git::Workflow::Command qw/get_options/;
 
-our $VERSION  = 0.95;
+our $VERSION  = 0.96;
 our $workflow = App::Git::Workflow->new;
 our ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 our %option;
@@ -54,6 +54,7 @@ sub run {
     push @options, '-a' if $option{all};
 
     for my $branch ($workflow->git->branch(@options)) {
+        next if $branch =~ / -> /;
         $branch =~ s/^[*]?\s*//;
         for my $log ($workflow->git->log('--format=format:%h %an', ($option{merges} ? () : '--no-merges'), "--since=$date", $branch)) {
             my ($hash, $name) = split /\s/, $log, 2;
@@ -81,13 +82,15 @@ git-committers - Stats on the number of commits by committer
 
 =head1 VERSION
 
-This documentation refers to git-committers version 0.95
+This documentation refers to git-committers version 0.96
 
 =head1 SYNOPSIS
 
    git-committers [option]
 
  OPTIONS:
+  -r --remote   Committers to remote branches
+  -a --all      Committers to any branch (remote or local)
   -d --date=YYYY-MM-DD
                 Commits since this date
   -p --period=[day|week|month|year]
@@ -103,6 +106,9 @@ This documentation refers to git-committers version 0.95
      --man      Prints the full documentation for git-committers
 
 =head1 DESCRIPTION
+
+The C<git-committers> command allows to get statistics on who is committing
+to the git repository.
 
 =head1 SUBROUTINES/METHODS
 

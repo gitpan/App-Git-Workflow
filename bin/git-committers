@@ -20,13 +20,15 @@ git-committers - Stats on the number of commits by committer
 
 =head1 VERSION
 
-This documentation refers to git-committers version 0.95
+This documentation refers to git-committers version 0.96
 
 =head1 SYNOPSIS
 
    git-committers [option]
 
  OPTIONS:
+  -r --remote   Committers to remote branches
+  -a --all      Committers to any branch (remote or local)
   -d --date=YYYY-MM-DD
                 Commits since this date
   -p --period=[day|week|month|year]
@@ -42,6 +44,9 @@ This documentation refers to git-committers version 0.95
      --man      Prints the full documentation for git-committers
 
 =head1 DESCRIPTION
+
+The C<git-committers> command allows to get statistics on who is committing
+to the git repository.
 
 =head1 SUBROUTINES/METHODS
 
