@@ -12,7 +12,7 @@ use English qw/ -no_match_vars /;
 use App::Git::Workflow;
 use App::Git::Workflow::Command qw/get_options/;
 
-our $VERSION  = 0.96;
+our $VERSION  = 0.96001;
 our $workflow = App::Git::Workflow->new;
 our ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 our %option;
@@ -147,7 +147,7 @@ git-watch - Watch for changes in repository up-stream
 
 =head1 VERSION
 
-This documentation refers to git-watch version 0.96
+This documentation refers to git-watch version 0.96001
 
 =head1 SYNOPSIS
 
@@ -161,9 +161,9 @@ This documentation refers to git-watch version 0.96
  OPTIONS:
   -1 --once     Run once then exit
   -p --pull     Before checking if anything has changed do a git pull to the
-                current branch.
+                current branch. (see notes below)
   -P --pull-options[=]flags
-                When using --pull add these options to the pull command
+                When using --pull add these options to the pull command.
   -f --file[=]regex
                 Watch file any files changing that match "regex"
   -b --branch[=]regex
@@ -207,6 +207,14 @@ A simple example:
   git watch 'echo $WATCH_FILES'
 
 This would just echo the files that have changed with each change.
+
+=head2 Notes
+
+If trying to watch a branch that is connected to a remote branch the C<--pull>
+isn't currently working as expected. The workaround is to watch the remote
+branch and do the pull your self. eg
+
+ $ git watch do -rb origin/master -- 'git pull --ff -r; your-command'
 
 =head1 SUBROUTINES/METHODS
 
